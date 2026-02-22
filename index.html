@@ -1,0 +1,2071 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Urgencya System — Construímos sistemas digitais sob medida para negócios com operação real.">
+  <title>Urgencya System — Fábrica de Produtos Digitais</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       URGENCYA SYSTEM — DESIGN TOKENS
+       Fonte da verdade visual. Nunca use valores fora daqui.
+    ============================================================ */
+    :root {
+      --color-bg:            #0A0907;
+      --color-surface-1:     #111009;
+      --color-surface-2:     #191710;
+      --color-surface-3:     #211F15;
+      --color-text-primary:  #F0EDE6;
+      --color-text-secondary:rgba(240,237,230,0.55);
+      --color-text-tertiary: rgba(240,237,230,0.30);
+      --color-text-disabled: rgba(240,237,230,0.18);
+      --color-gold:          #C9A84C;
+      --color-gold-dim:      rgba(201,168,76,0.35);
+      --color-gold-subtle:   rgba(201,168,76,0.08);
+      --color-border:        rgba(201,168,76,0.08);
+      --color-border-strong: rgba(201,168,76,0.18);
+      --color-border-subtle: rgba(255,255,255,0.05);
+      --color-success:       #3D8C5E;
+      --color-error:         #C9574C;
+      --font-display:        'Space Grotesk', sans-serif;
+      --font-mono:           'DM Mono', monospace;
+      --space-1:  4px;
+      --space-2:  8px;
+      --space-3:  12px;
+      --space-4:  16px;
+      --space-5:  20px;
+      --space-6:  24px;
+      --space-8:  32px;
+      --space-10: 40px;
+      --space-12: 48px;
+      --space-16: 64px;
+      --space-20: 80px;
+      --space-24: 96px;
+      --space-32: 128px;
+      --transition-fast: 150ms ease;
+      --transition-base: 250ms ease;
+    }
+
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--color-bg);
+      color: var(--color-text-primary);
+      font-family: var(--font-display);
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    /* ============================================================
+       LAYOUT
+    ============================================================ */
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 var(--space-8);
+    }
+
+    .container-narrow {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 var(--space-8);
+    }
+
+    section {
+      padding: var(--space-24) 0;
+    }
+
+    /* ============================================================
+       NAVEGAÇÃO
+    ============================================================ */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(10,9,7,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border);
+      transition: border-color var(--transition-base);
+    }
+
+    .nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 var(--space-8);
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .nav-brand-text {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--color-text-primary);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: var(--space-8);
+      list-style: none;
+    }
+
+    .nav-link {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+      transition: color var(--transition-fast);
+    }
+
+    .nav-link:hover { color: var(--color-text-primary); }
+
+    .nav-cta {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #0A0907;
+      background: var(--color-gold);
+      padding: var(--space-2) var(--space-5);
+      transition: all var(--transition-base);
+      cursor: pointer;
+      border: none;
+    }
+
+    .nav-cta:hover {
+      background: #D4B55C;
+      box-shadow: 0 0 24px rgba(201,168,76,0.2);
+    }
+
+    .nav-mobile-btn {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: var(--space-2);
+    }
+
+    .nav-mobile-btn span {
+      display: block;
+      width: 22px;
+      height: 1px;
+      background: var(--color-text-secondary);
+      transition: all var(--transition-base);
+    }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    .hero {
+      padding-top: calc(64px + var(--space-24));
+      padding-bottom: var(--space-24);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%);
+      top: -100px;
+      right: -100px;
+      pointer-events: none;
+    }
+
+    .hero-glow-2 {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,168,76,0.04) 0%, transparent 70%);
+      bottom: 0;
+      left: -100px;
+      pointer-events: none;
+    }
+
+    .hero-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--color-gold);
+      margin-bottom: var(--space-6);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .hero-label::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--color-gold);
+    }
+
+    .hero-headline {
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      color: var(--color-text-primary);
+      max-width: 800px;
+      margin-bottom: var(--space-8);
+    }
+
+    .hero-headline em {
+      font-style: normal;
+      color: var(--color-gold);
+    }
+
+    .hero-sub {
+      font-size: 17px;
+      font-weight: 300;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      max-width: 560px;
+      margin-bottom: var(--space-10);
+    }
+
+    .hero-cta-group {
+      display: flex;
+      align-items: center;
+      gap: var(--space-5);
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #0A0907;
+      background: var(--color-gold);
+      padding: var(--space-4) var(--space-8);
+      cursor: pointer;
+      border: none;
+      transition: all var(--transition-base);
+    }
+
+    .btn-primary:hover {
+      background: #D4B55C;
+      box-shadow: 0 0 32px rgba(201,168,76,0.25);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+      background: none;
+      border: none;
+      cursor: pointer;
+      border-bottom: 1px solid var(--color-border);
+      padding-bottom: var(--space-1);
+      transition: all var(--transition-base);
+    }
+
+    .btn-ghost:hover {
+      color: var(--color-gold);
+      border-color: var(--color-gold-dim);
+    }
+
+    .hero-stats {
+      display: flex;
+      align-items: center;
+      gap: var(--space-8);
+      margin-top: var(--space-16);
+      padding-top: var(--space-8);
+      border-top: 1px solid var(--color-border);
+      flex-wrap: wrap;
+    }
+
+    .hero-stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+
+    .hero-stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--color-text-primary);
+    }
+
+    .hero-stat-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-text-disabled);
+    }
+
+    .hero-stat-divider {
+      width: 1px;
+      height: 40px;
+      background: var(--color-border);
+    }
+
+    /* ============================================================
+       SEÇÃO — PROBLEMA
+    ============================================================ */
+    .problem-section {
+      background: var(--color-surface-1);
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .section-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--color-gold);
+      margin-bottom: var(--space-5);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .section-eyebrow::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 1px;
+      background: var(--color-gold);
+    }
+
+    .section-title {
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-6);
+    }
+
+    .section-desc {
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      max-width: 560px;
+      margin-bottom: var(--space-12);
+    }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--color-border);
+      border: 1px solid var(--color-border);
+    }
+
+    .problem-item {
+      background: var(--color-surface-1);
+      padding: var(--space-8);
+      transition: background var(--transition-base);
+    }
+
+    .problem-item:hover {
+      background: var(--color-surface-2);
+    }
+
+    .problem-icon {
+      width: 32px;
+      height: 32px;
+      margin-bottom: var(--space-5);
+      color: var(--color-gold);
+    }
+
+    .problem-text {
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--color-text-secondary);
+      line-height: 1.65;
+    }
+
+    .problem-text strong {
+      color: var(--color-text-primary);
+      font-weight: 500;
+    }
+
+    .problem-callout {
+      margin-top: var(--space-8);
+      padding: var(--space-8);
+      border-left: 2px solid var(--color-gold);
+      background: var(--color-gold-subtle);
+    }
+
+    .problem-callout-text {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      font-style: italic;
+    }
+
+    /* ============================================================
+       SEÇÃO — ALTERNATIVAS
+    ============================================================ */
+    .alternatives-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--color-border);
+      border: 1px solid var(--color-border);
+    }
+
+    .alt-item {
+      background: var(--color-surface-1);
+      padding: var(--space-8);
+    }
+
+    .alt-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-text-disabled);
+      margin-bottom: var(--space-3);
+    }
+
+    .alt-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-4);
+    }
+
+    .alt-desc {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--color-text-tertiary);
+      line-height: 1.7;
+    }
+
+    /* ============================================================
+       SEÇÃO — MECANISMO ÚNICO
+    ============================================================ */
+    .mechanism-section {
+      background: var(--color-surface-1);
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .mechanism-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-16);
+      align-items: center;
+    }
+
+    .mechanism-steps {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .mechanism-step {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: var(--space-5);
+      padding: var(--space-6);
+      border: 1px solid var(--color-border);
+      background: var(--color-surface-2);
+      transition: border-color var(--transition-base);
+    }
+
+    .mechanism-step:hover {
+      border-color: var(--color-border-strong);
+    }
+
+    .step-num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--color-gold);
+      font-weight: 500;
+      padding-top: 2px;
+    }
+
+    .step-content {}
+
+    .step-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .step-desc {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--color-text-tertiary);
+      line-height: 1.65;
+    }
+
+    .mechanism-visual {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+    }
+
+    .mechanism-quote {
+      padding: var(--space-8);
+      border: 1px solid var(--color-border-strong);
+      background: var(--color-surface-2);
+      position: relative;
+    }
+
+    .mechanism-quote-text {
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--color-text-primary);
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    .mechanism-quote-text em {
+      font-style: normal;
+      color: var(--color-gold);
+    }
+
+    /* ============================================================
+       SEÇÃO — PORTFÓLIO
+    ============================================================ */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--color-border);
+      border: 1px solid var(--color-border);
+    }
+
+    .portfolio-item {
+      background: var(--color-surface-1);
+      padding: var(--space-10);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .portfolio-glow {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--color-gold-subtle) 0%, transparent 70%);
+      top: -100px;
+      right: -100px;
+      pointer-events: none;
+    }
+
+    .portfolio-tag {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-gold);
+      background: var(--color-gold-subtle);
+      border: 1px solid var(--color-border);
+      padding: 3px var(--space-3);
+      display: inline-block;
+      margin-bottom: var(--space-5);
+    }
+
+    .portfolio-name {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-3);
+    }
+
+    .portfolio-client {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-text-disabled);
+      margin-bottom: var(--space-6);
+    }
+
+    .portfolio-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--color-text-tertiary);
+      line-height: 1.7;
+      margin-bottom: var(--space-8);
+    }
+
+    .portfolio-features {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .portfolio-feature {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-text-disabled);
+    }
+
+    .portfolio-feature::before {
+      content: '';
+      display: block;
+      width: 16px;
+      height: 1px;
+      background: var(--color-gold-dim);
+      flex-shrink: 0;
+    }
+
+    /* ============================================================
+       SEÇÃO — OFERTA
+    ============================================================ */
+    .offer-section {
+      background: var(--color-surface-1);
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .offer-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--color-border);
+      border: 1px solid var(--color-border);
+    }
+
+    .offer-card {
+      background: var(--color-bg);
+      padding: var(--space-8);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .offer-card-featured {
+      background: var(--color-surface-2);
+      border-top: 2px solid var(--color-gold);
+    }
+
+    .offer-num {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-text-disabled);
+    }
+
+    .offer-name {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--color-text-primary);
+    }
+
+    .offer-price {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--color-gold);
+      font-family: var(--font-mono);
+      letter-spacing: 0.05em;
+    }
+
+    .offer-divider {
+      width: 24px;
+      height: 1px;
+      background: var(--color-border-strong);
+    }
+
+    .offer-desc {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--color-text-tertiary);
+      line-height: 1.7;
+      flex: 1;
+    }
+
+    .offer-timeline {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-text-disabled);
+      border-top: 1px solid var(--color-border);
+      padding-top: var(--space-4);
+      margin-top: auto;
+    }
+
+    /* ============================================================
+       SEÇÃO — FORMULÁRIO
+    ============================================================ */
+    .form-section {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .form-glow {
+      position: absolute;
+      width: 800px;
+      height: 800px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,168,76,0.04) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .form-wrapper {
+      max-width: 640px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .form-header {
+      text-align: center;
+      margin-bottom: var(--space-12);
+    }
+
+    .form-card {
+      background: var(--color-surface-1);
+      border: 1px solid var(--color-border);
+      padding: var(--space-10);
+    }
+
+    .form-step {
+      display: none;
+    }
+
+    .form-step.active {
+      display: block;
+    }
+
+    .form-step-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-text-disabled);
+      margin-bottom: var(--space-6);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .form-step-progress {
+      display: flex;
+      gap: var(--space-2);
+    }
+
+    .form-step-dot {
+      width: 16px;
+      height: 2px;
+      background: var(--color-border);
+      transition: background var(--transition-base);
+    }
+
+    .form-step-dot.active {
+      background: var(--color-gold);
+    }
+
+    .form-question {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-3);
+      line-height: 1.35;
+    }
+
+    .form-hint {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--color-text-tertiary);
+      margin-bottom: var(--space-6);
+      line-height: 1.5;
+    }
+
+    .form-options {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .form-option {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-4);
+      padding: var(--space-4) var(--space-5);
+      border: 1px solid var(--color-border);
+      background: var(--color-bg);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      position: relative;
+    }
+
+    .form-option:hover {
+      border-color: var(--color-border-strong);
+      background: var(--color-surface-2);
+    }
+
+    .form-option.selected {
+      border-color: var(--color-gold-dim);
+      background: var(--color-gold-subtle);
+    }
+
+    .form-option input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .form-option-indicator {
+      width: 16px;
+      height: 16px;
+      border: 1px solid var(--color-border);
+      flex-shrink: 0;
+      margin-top: 2px;
+      transition: all var(--transition-fast);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .form-option.selected .form-option-indicator {
+      border-color: var(--color-gold);
+      background: var(--color-gold);
+    }
+
+    .form-option.selected .form-option-indicator::after {
+      content: '';
+      display: block;
+      width: 6px;
+      height: 6px;
+      background: #0A0907;
+    }
+
+    .form-option-text {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+      transition: color var(--transition-fast);
+    }
+
+    .form-option.selected .form-option-text {
+      color: var(--color-text-primary);
+    }
+
+    .form-input {
+      width: 100%;
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-primary);
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 400;
+      padding: var(--space-4) var(--space-5);
+      outline: none;
+      transition: border-color var(--transition-fast);
+      appearance: none;
+      border-radius: 0;
+    }
+
+    .form-input::placeholder {
+      color: var(--color-text-disabled);
+    }
+
+    .form-input:focus {
+      border-color: var(--color-gold-dim);
+    }
+
+    .form-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: var(--space-8);
+      padding-top: var(--space-6);
+      border-top: 1px solid var(--color-border);
+    }
+
+    .btn-form-back {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: color var(--transition-fast);
+      padding: 0;
+    }
+
+    .btn-form-back:hover { color: var(--color-text-secondary); }
+
+    .btn-form-next {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #0A0907;
+      background: var(--color-gold);
+      border: none;
+      padding: var(--space-3) var(--space-6);
+      cursor: pointer;
+      transition: all var(--transition-base);
+    }
+
+    .btn-form-next:hover {
+      background: #D4B55C;
+    }
+
+    .btn-form-next:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    /* Estados de resultado */
+    .result-state {
+      display: none;
+      text-align: center;
+      padding: var(--space-12);
+    }
+
+    .result-state.active {
+      display: block;
+    }
+
+    .result-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto var(--space-6);
+    }
+
+    .result-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-3);
+    }
+
+    .result-desc {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      max-width: 440px;
+      margin: 0 auto var(--space-8);
+    }
+
+    /* ============================================================
+       SEÇÃO — OBJEÇÕES
+    ============================================================ */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--color-border);
+      border: 1px solid var(--color-border);
+    }
+
+    .faq-item {
+      background: var(--color-surface-1);
+      overflow: hidden;
+    }
+
+    .faq-trigger {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-6) var(--space-8);
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      gap: var(--space-4);
+      transition: background var(--transition-fast);
+    }
+
+    .faq-trigger:hover {
+      background: var(--color-surface-2);
+    }
+
+    .faq-question {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      line-height: 1.4;
+    }
+
+    .faq-icon {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      position: relative;
+      transition: transform var(--transition-base);
+    }
+
+    .faq-icon::before,
+    .faq-icon::after {
+      content: '';
+      position: absolute;
+      background: var(--color-gold);
+      transition: all var(--transition-base);
+    }
+
+    .faq-icon::before {
+      width: 12px;
+      height: 1px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .faq-icon::after {
+      width: 1px;
+      height: 12px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .faq-item.open .faq-icon::after {
+      opacity: 0;
+      transform: translate(-50%, -50%) rotate(90deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+    }
+
+    .faq-item.open .faq-answer {
+      max-height: 300px;
+    }
+
+    .faq-answer-inner {
+      padding: 0 var(--space-8) var(--space-6);
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--color-text-tertiary);
+      line-height: 1.75;
+      border-top: 1px solid var(--color-border);
+      padding-top: var(--space-5);
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    .footer {
+      border-top: 1px solid var(--color-border);
+      padding: var(--space-10) 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .footer-text {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--color-text-disabled);
+    }
+
+    .footer-link {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--color-text-disabled);
+      transition: color var(--transition-fast);
+    }
+
+    .footer-link:hover { color: var(--color-gold); }
+
+    /* ============================================================
+       LOADER / FEEDBACK
+    ============================================================ */
+    .form-loading {
+      display: none;
+      align-items: center;
+      gap: var(--space-3);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+    }
+
+    .form-loading.active {
+      display: flex;
+    }
+
+    .loader-dot {
+      width: 4px;
+      height: 4px;
+      background: var(--color-gold);
+      animation: pulse 1.2s ease infinite;
+    }
+
+    .loader-dot:nth-child(2) { animation-delay: 0.2s; }
+    .loader-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 1; }
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-cta { display: none; }
+      .nav-mobile-btn { display: flex; }
+
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: var(--color-surface-1);
+        padding: var(--space-6) var(--space-8);
+        gap: var(--space-5);
+        border-bottom: 1px solid var(--color-border);
+        z-index: 99;
+      }
+
+      .problem-grid { grid-template-columns: 1fr; }
+      .alternatives-grid { grid-template-columns: 1fr; }
+      .mechanism-grid { grid-template-columns: 1fr; }
+      .portfolio-grid { grid-template-columns: 1fr; }
+      .offer-grid { grid-template-columns: 1fr; }
+
+      .hero-stats { gap: var(--space-6); }
+      .hero-stat-divider { display: none; }
+    }
+
+    /* ============================================================
+       ANIMAÇÕES DE ENTRADA
+    ============================================================ */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       NAVEGAÇÃO
+  ============================================================ -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">
+        <svg width="24" height="24" viewBox="0 0 80 80" fill="none">
+          <line x1="16" y1="16" x2="16" y2="52" stroke="#C9A84C" stroke-width="4" stroke-linecap="round"/>
+          <path d="M16 52 Q16 68 32 68 Q48 68 48 52" fill="none" stroke="#C9A84C" stroke-width="4" stroke-linecap="round"/>
+          <line x1="48" y1="52" x2="48" y2="24" stroke="#C9A84C" stroke-width="4" stroke-linecap="round"/>
+          <line x1="48" y1="24" x2="68" y2="24" stroke="rgba(201,168,76,0.5)" stroke-width="3" stroke-linecap="round" stroke-dasharray="3 3"/>
+          <path d="M64 19 L70 24 L64 29" fill="none" stroke="rgba(201,168,76,0.5)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="16" cy="16" r="3.5" fill="rgba(201,168,76,0.3)" stroke="#C9A84C" stroke-width="2"/>
+          <circle cx="48" cy="24" r="3.5" fill="#C9A84C"/>
+        </svg>
+        <span class="nav-brand-text">Urgencya</span>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#portfolio" class="nav-link">Portfólio</a></li>
+        <li><a href="#servicos" class="nav-link">Serviços</a></li>
+        <li><a href="#faq" class="nav-link">FAQ</a></li>
+      </ul>
+
+      <button class="nav-cta" onclick="scrollToForm()">Iniciar projeto</button>
+
+      <button class="nav-mobile-btn" id="mobileBtn" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       HERO
+  ============================================================ -->
+  <section class="hero" id="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-glow-2"></div>
+    <div class="container">
+      <div class="hero-label fade-up">Fábrica de produtos digitais</div>
+
+      <h1 class="hero-headline fade-up">
+        Você paga todo mês por uma plataforma que resolve <em>10% do seu problema.</em>
+      </h1>
+
+      <p class="hero-sub fade-up">
+        Construímos sistemas digitais sob medida para negócios com operação real. Nada genérico. Nada que você não vai usar. Exatamente o que o seu negócio precisa para parar de perder tempo e dinheiro com processo que ainda roda no braço.
+      </p>
+
+      <div class="hero-cta-group fade-up">
+        <button class="btn-primary" onclick="scrollToForm()">
+          Quero um sistema que resolve o meu problema →
+        </button>
+        <a href="#portfolio" class="btn-ghost">Ver o que construímos</a>
+      </div>
+
+      <div class="hero-stats fade-up">
+        <div class="hero-stat-item">
+          <div class="hero-stat-value">2</div>
+          <div class="hero-stat-label">Produtos em produção</div>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat-item">
+          <div class="hero-stat-value">14d</div>
+          <div class="hero-stat-label">Entrega de landing page</div>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat-item">
+          <div class="hero-stat-value">0</div>
+          <div class="hero-stat-label">Templates usados</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PROBLEMA
+  ============================================================ -->
+  <section class="problem-section">
+    <div class="container">
+      <div class="section-eyebrow fade-up">O problema real</div>
+      <h2 class="section-title fade-up">Você reconhece algum desses cenários?</h2>
+
+      <div class="problem-grid fade-up">
+        <div class="problem-item">
+          <svg class="problem-icon" viewBox="0 0 32 32" fill="none">
+            <rect x="4" y="8" width="24" height="16" rx="0" stroke="currentColor" stroke-width="1.5"/>
+            <line x1="4" y1="13" x2="28" y2="13" stroke="currentColor" stroke-width="1"/>
+            <line x1="10" y1="8" x2="10" y2="24" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+          </svg>
+          <p class="problem-text">Você paga todo mês por uma plataforma que <strong>faz muito mais do que você precisa</strong> — e cobra por isso — mas ainda falta justamente a funcionalidade que resolveria o seu dia a dia.</p>
+        </div>
+        <div class="problem-item">
+          <svg class="problem-icon" viewBox="0 0 32 32" fill="none">
+            <path d="M6 26 L6 10 L16 4 L26 10 L26 26" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <rect x="12" y="18" width="8" height="8" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="16" cy="13" r="3" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+          <p class="problem-text">Você controla clientes, pedidos ou assinantes <strong>numa planilha que só você entende.</strong> Se sumir, você perde o controle do negócio.</p>
+        </div>
+        <div class="problem-item">
+          <svg class="problem-icon" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="10" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M16 10 L16 16 L20 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <p class="problem-text">Você já tentou adaptar o seu processo a uma ferramenta pronta. <strong>A ferramenta ganhou. O processo perdeu.</strong> E você continua trabalhando do mesmo jeito de antes.</p>
+        </div>
+        <div class="problem-item">
+          <svg class="problem-icon" viewBox="0 0 32 32" fill="none">
+            <path d="M8 24 L8 16 M14 24 L14 10 M20 24 L20 14 M26 24 L26 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <p class="problem-text">Você sabe exatamente o que precisaria para funcionar melhor. Mas <strong>não sabe como transformar isso em realidade</strong> sem gastar uma fortuna ou esperar meses.</p>
+        </div>
+      </div>
+
+      <div class="problem-callout fade-up">
+        <p class="problem-callout-text">Se você se viu em pelo menos um desses cenários, você não tem um problema de tecnologia. Você tem um problema de operação que tecnologia errada está piorando.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ALTERNATIVAS
+  ============================================================ -->
+  <section>
+    <div class="container">
+      <div class="section-eyebrow fade-up">Por que o que você tentou não resolveu</div>
+      <h2 class="section-title fade-up">As alternativas têm um custo que ninguém te conta</h2>
+      <p class="section-desc fade-up">Cada caminho que parecia mais fácil tem um problema estrutural que só aparece depois.</p>
+
+      <div class="alternatives-grid fade-up">
+        <div class="alt-item">
+          <div class="alt-label">Alternativa 01</div>
+          <div class="alt-title">Plataformas genéricas</div>
+          <p class="alt-desc">Foram construídas para servir mil negócios ao mesmo tempo. Você paga por funcionalidades que não usa e não tem as que precisa. Você se adapta à ferramenta — não o contrário.</p>
+        </div>
+        <div class="alt-item">
+          <div class="alt-label">Alternativa 02</div>
+          <div class="alt-title">Freelancer ou agência tradicional</div>
+          <p class="alt-desc">Semanas explicando o problema. Orçamento que parece absurdo. Meses esperando. Quando entrega, metade não funciona como você imaginou. E quando quebra, você está sozinho.</p>
+        </div>
+        <div class="alt-item">
+          <div class="alt-label">Alternativa 03</div>
+          <div class="alt-title">Ferramentas no-code</div>
+          <p class="alt-desc">Ótimas para quem tem tempo para aprender. Para quem tem um negócio para tocar, viram mais um projeto abandonado na metade. O que não quebra hoje, quebra quando o negócio crescer.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       MECANISMO ÚNICO
+  ============================================================ -->
+  <section class="mechanism-section">
+    <div class="container">
+      <div class="mechanism-grid">
+        <div>
+          <div class="section-eyebrow fade-up">Como trabalhamos</div>
+          <h2 class="section-title fade-up">O problema primeiro. O código depois.</h2>
+          <p class="section-desc fade-up">A maioria das agências recebe um briefing e entrega um orçamento. Nós fazemos diferente.</p>
+
+          <div class="mechanism-steps fade-up">
+            <div class="mechanism-step">
+              <div class="step-num">01</div>
+              <div class="step-content">
+                <div class="step-title">Mapeamento do problema</div>
+                <p class="step-desc">Você chega com uma dor. Nós identificamos o que está custando dinheiro na sua operação hoje — não o que parece o problema, o que é o problema de fato.</p>
+              </div>
+            </div>
+            <div class="mechanism-step">
+              <div class="step-num">02</div>
+              <div class="step-content">
+                <div class="step-title">Escopo cirúrgico</div>
+                <p class="step-desc">Definimos exatamente o que precisa ser construído para eliminar aquela dor. Sem feature desnecessária. Sem escopo inflado. Você aprova antes de qualquer código.</p>
+              </div>
+            </div>
+            <div class="mechanism-step">
+              <div class="step-num">03</div>
+              <div class="step-content">
+                <div class="step-title">Entrega em produção</div>
+                <p class="step-desc">Um produto digital limpo, documentado e funcionando. Não um protótipo. Não uma demo. Algo que trabalha pelo seu negócio todo dia.</p>
+              </div>
+            </div>
+            <div class="mechanism-step">
+              <div class="step-num">04</div>
+              <div class="step-content">
+                <div class="step-title">Evolução contínua</div>
+                <p class="step-desc">Um produto que para de evoluir começa a morrer. O retainer mensal garante que o sistema cresce junto com o negócio — sem projeto novo, sem orçamento novo.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mechanism-visual fade-up">
+          <div class="mechanism-quote">
+            <p class="mechanism-quote-text">Não vendemos horas. Não vendemos tecnologia. Vendemos a <em>eliminação de um problema</em> que está custando dinheiro todo mês.</p>
+          </div>
+
+          <div style="background:var(--color-surface-2);border:1px solid var(--color-border);padding:var(--space-8);">
+            <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--color-text-disabled);margin-bottom:var(--space-5);">Resultado esperado</div>
+            <div style="display:flex;flex-direction:column;gap:var(--space-3);">
+              <div style="display:flex;align-items:center;gap:var(--space-3);font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-text-tertiary);">
+                <span style="width:4px;height:4px;background:var(--color-gold);display:block;flex-shrink:0;"></span>
+                Operação que hoje roda no braço → sistema que roda sozinho
+              </div>
+              <div style="display:flex;align-items:center;gap:var(--space-3);font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-text-tertiary);">
+                <span style="width:4px;height:4px;background:var(--color-gold);display:block;flex-shrink:0;"></span>
+                Plataforma genérica cara → sistema feito para o seu caso
+              </div>
+              <div style="display:flex;align-items:center;gap:var(--space-3);font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-text-tertiary);">
+                <span style="width:4px;height:4px;background:var(--color-gold);display:block;flex-shrink:0;"></span>
+                Planilha que quebra um dia → produto que escala com o negócio
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PORTFÓLIO
+  ============================================================ -->
+  <section id="portfolio">
+    <div class="container">
+      <div class="section-eyebrow fade-up">Portfólio</div>
+      <h2 class="section-title fade-up">O que já construímos</h2>
+      <p class="section-desc fade-up">Dois produtos reais, em produção, construídos do zero.</p>
+
+      <div class="portfolio-grid fade-up">
+        <div class="portfolio-item">
+          <div class="portfolio-glow"></div>
+          <div class="portfolio-tag">Sistema completo</div>
+          <div class="portfolio-name">Liserie Hub</div>
+          <div class="portfolio-client">Liserie — Lingerie atacado, São Paulo</div>
+          <p class="portfolio-desc">Antes do sistema, controlavam assinantes em planilha e não tinham visibilidade do negócio em tempo real. Construímos uma plataforma de gestão completa — do zero — que eliminou a dependência de planilha e centralizou toda a operação.</p>
+          <div class="portfolio-features">
+            <div class="portfolio-feature">Dashboard com MRR e métricas em tempo real</div>
+            <div class="portfolio-feature">Gestão de assinaturas anuais e semestrais</div>
+            <div class="portfolio-feature">Pagamentos multi-canal — PIX, cartão, boleto</div>
+            <div class="portfolio-feature">CRM com pipeline, tarefas e segmentos</div>
+            <div class="portfolio-feature">Automações de email e módulo de envios</div>
+          </div>
+        </div>
+
+        <div class="portfolio-item">
+          <div class="portfolio-glow"></div>
+          <div class="portfolio-tag">Plataforma SaaS</div>
+          <div class="portfolio-name">Prospex</div>
+          <div class="portfolio-client">Prospex — Prospecção B2B, Brasil</div>
+          <p class="portfolio-desc">Chegaram com a ideia. Entregamos a plataforma. A primeira ferramenta de prospecção B2B com comando de voz do Brasil — da arquitetura ao lançamento.</p>
+          <div class="portfolio-features">
+            <div class="portfolio-feature">Busca por voz — primeira do mercado brasileiro</div>
+            <div class="portfolio-feature">Enriquecimento automático em 6 camadas de dados</div>
+            <div class="portfolio-feature">Scoring de leads com inteligência artificial</div>
+            <div class="portfolio-feature">Integrações nativas com Pipedrive e RD Station</div>
+            <div class="portfolio-feature">2 clientes ativos pagantes desde o lançamento</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       OFERTA
+  ============================================================ -->
+  <section class="offer-section" id="servicos">
+    <div class="container">
+      <div class="section-eyebrow fade-up">Como trabalhamos</div>
+      <h2 class="section-title fade-up">Três formas de trabalhar juntos</h2>
+      <p class="section-desc fade-up">Não existe pacote padrão. Mas existe uma estrutura que funciona para a maioria dos negócios que atendemos.</p>
+
+      <div class="offer-grid fade-up">
+        <div class="offer-card">
+          <div class="offer-num">Entrada — 01</div>
+          <div class="offer-name">Landing Page</div>
+          <div class="offer-price">A partir de R$ 2.500</div>
+          <div class="offer-divider"></div>
+          <p class="offer-desc">Para negócios que precisam de uma presença digital que vende, não apenas que existe. Estratégia de oferta, copy e código — não um template customizado.</p>
+          <div class="offer-timeline">Entrega em até 14 dias úteis</div>
+        </div>
+
+        <div class="offer-card offer-card-featured">
+          <div class="offer-num">Core — 02</div>
+          <div class="offer-name">Sistema Sob Medida</div>
+          <div class="offer-price">A partir de R$ 15.000</div>
+          <div class="offer-divider"></div>
+          <p class="offer-desc">Para operações que precisam digitalizar um processo que hoje roda no braço. Do mapeamento do problema à entrega em produção. Sem gambiarras.</p>
+          <div class="offer-timeline">30 a 90 dias conforme escopo</div>
+        </div>
+
+        <div class="offer-card">
+          <div class="offer-num">Continuidade — 03</div>
+          <div class="offer-name">Retainer Mensal</div>
+          <div class="offer-price">R$ 1.500 a R$ 3.500/mês</div>
+          <div class="offer-divider"></div>
+          <p class="offer-desc">Um produto digital que para de evoluir começa a morrer. O retainer garante que o sistema cresce junto com o negócio — novas funcionalidades, ajustes e suporte.</p>
+          <div class="offer-timeline">Contrato mensal — sem fidelidade</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FORMULÁRIO DE QUALIFICAÇÃO
+  ============================================================ -->
+  <section class="form-section" id="contato">
+    <div class="form-glow"></div>
+    <div class="container-narrow">
+      <div class="form-header fade-up">
+        <div class="section-eyebrow" style="justify-content:center;">Vamos conversar</div>
+        <h2 class="section-title" style="text-align:center;">Quero descobrir o que está travando o meu negócio</h2>
+        <p style="font-size:15px;font-weight:300;color:var(--color-text-tertiary);line-height:1.7;text-align:center;max-width:480px;margin:0 auto;">Responda as perguntas abaixo. Se fizer sentido trabalharmos juntos, você recebe o link para agendar uma conversa de 30 minutos — sem compromisso, sem pitch de venda.</p>
+      </div>
+
+      <div class="form-card fade-up" id="formCard">
+
+        <!-- STEP 1 -->
+        <div class="form-step active" id="step1">
+          <div class="form-step-label">
+            Pergunta 1 de 5
+            <div class="form-step-progress">
+              <div class="form-step-dot active"></div>
+              <div class="form-step-dot"></div>
+              <div class="form-step-dot"></div>
+              <div class="form-step-dot"></div>
+              <div class="form-step-dot"></div>
+            </div>
+          </div>
+          <div class="form-question">Qual é o seu segmento de negócio?</div>
+          <div class="form-hint">Isso nos ajuda a entender o contexto antes da conversa.</div>
+          <div class="form-options" id="step1Options">
+            <label class="form-option" onclick="selectOption(this, 'segmento', 'Varejo / E-commerce')">
+              <input type="radio" name="segmento" value="Varejo / E-commerce">
+              <div class="form-option-indicator"></div>
+              <span class="form-option-text">Varejo / E-commerce</span>
+            </label>
+            <label class="form-option" onclick="selectOption(this, 'segmento', 'Serviços B2B')">
+              <input type="radio" name="segmento" value="Serviços B2B">
+              <div class="form-option-indicator"></div>
+              <span class="form-option-text">Serviços B2B</span>
+            </label>
+            <label class="form-option" onclick="selectOption(this, 'segmento', 'Saúde / Bem-estar')">
+              <input type="radio" name="segmento" value="Saúde / Bem-estar">
+              <div class="form-option-indicator"></div>
+              <span class="form-option-text">Saúde / Bem-estar</span>
+            </label>
+            <label class="form-option" onclick="selectOption(this, 'segmento', 'Educação / Infoprodutos')">
+              <input type="radio" name="segmento" value="Educação / Infoprodutos">
+              <div class="form-option-indicator"></div>
+              <span class="form-option-text">Educação / Infoprodutos</span>
+            </label>
+            <label class="form-option" onclick="selectOption(this, 'segmento', 'Alimentação / Food')">
+              <input type="radio" name="segmento" value="Alimentação / Food">
+              <div class="form-option-indicator"></div>
+              <span class="form-option-text">Alimentação / Food</span>
+            </label>
+            <label class="form-option" onclick="selectOption(this, 'segmento', 'Outro')">
+              <input type="radio" name="segmento" value="Outro">
+              <div class="form-option-indicator"></div>
+              <span class="form-option-text">Outro</span>
+            </label>
+          </div>
+          <div class="form-nav">
+            <div></div>
+            <button class="btn-form-next" onclick="nextStep(2)" id="next1" disabled>Próximo →</button>
+          </div>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="form-step" id="step2">
+          <div class="form-step-label">
+            Pergunta 2 de 5
+            <div class="form-step-progress">
+              <div class="form-step-dot active"></div>
+              <div class="form-step-dot active"></div>
+              <div class="form-step-dot"></div>
+              <div class="form-step-dot"></div>
+              <div class="form-step-dot"></div>
+            </div>
+          </div>
+          <div class="form-question">Qual é a maior travada operacional do seu negócio hoje?</div>
+          <div class="form-hint">Descreva com suas palavras — quanto mais específico, melhor.</div>
+          <textarea class="form-input" id="dor" rows="4" placeholder="Ex: Controlo meus clientes numa planilha e começo a perder o rastro quando o volume aumenta..." oninput="enableNext('next2', this.value.length > 20)"></textarea>
+          <div class="form-nav">
+            <button class="btn-form-back" onclick="prevStep(1)">← Voltar</button>
+            <button class="btn-form-next" onclick="nextStep(3)" id="next2" disabled>Próximo →</button>
+          </div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="form-step" id="step3">
+          <div class="form-step-label">
+            Pergunta 3 de 5
+            <div class="form-step-progress">
+              <div class="form-step-dot active"></div>
+              <div class="form-step-dot active"></div>
+              <div class="form-step-dot active"></div>
+              <div class="form-step-dot"></div>
+              <div class="form-step-dot"></div>
+            </div>
+          </div>
+          <div class="form-question">Hoje você usa alguma ferramenta digital para gerir essa parte do negócio?</div>
+          <div class="form-hint">Isso nos ajuda a entender o ponto de partida.</div>
+          <div class="form-options">
+            <label class="form-option" onclick="selectOption(this, 'ferramenta', 'Sim, pago por uma plataforma')">
+              <input type="radio" name="ferramenta" value="Sim, pago por uma plataforma">
+              <div class="form-option-indicator"></div>
+              <span class="form-option-text">Sim, pago por uma plataforma — mas não resolve tudo que preciso</span>
+            </label>
+            <label class="form-option" onclick="selectOption(this, 'ferramenta', 'Sim, uso planilha ou WhatsApp')">
+              <input type="radio" name="ferramenta" value="Sim, uso planilha ou WhatsApp">
+              <div class="form-option-indicator"></div>
+              <span class="form-option-text">Sim, uso planilha, WhatsApp ou algo improvisado</span>
+            </label>
+            <label class="form-option" onclick="selectOption(this, 'ferramenta', 'Não uso nada estruturado')">
+              <input type="radio" name="ferramenta" value="Não uso nada estruturado">
+              <div class="form-option-indicator"></div>
+              <span class="form-option-text">Não uso nada estruturado — roda tudo na memória</span>
+            </label>
+          </div>
+          <div class="form-nav">
+            <button class="btn-form-back" onclick="prevStep(2)">← Voltar</button>
+            <button class="btn-form-next" onclick="nextStep(4)" id="next3" disabled>Próximo →</button>
+          </div>
+        </div>
+
+        <!-- STEP 4 -->
+        <div class="form-step" id="step4">
+          <div class="form-step-label">
+            Pergunta 4 de 5
+            <div class="form-step-progress">
+              <div class="form-step-dot active"></div>
+              <div class="form-step-dot active"></div>
+              <div class="form-step-dot active"></div>
+              <div class="form-step-dot active"></div>
+              <div class="form-step-dot"></div>
+            </div>
+          </div>
+          <div class="form-question">Qual é o faturamento mensal aproximado do seu negócio?</div>
+          <div class="form-hint">Preciso entender o contexto para saber o que faz sentido recomendar.</div>
+          <div class="form-options">
+            <label class="form-option" onclick="selectOption(this, 'faturamento', 'Abaixo de R$ 10k')">
+              <input type="radio" name="faturamento" value="Abaixo de R$ 10k">
+              <div class="form-option-indicator"></div>
+              <span class="form-option-text">Abaixo de R$ 10.000</span>
+            </label>
+            <label class="form-option" onclick="selectOption(this, 'faturamento', 'R$ 10k a R$ 50k')">
+              <input type="radio" name="faturamento" value="R$ 10k a R$ 50k">
+              <div class="form-option-indicator"></div>
+              <span class="form-option-text">R$ 10.000 a R$ 50.000</span>
+            </label>
+            <label class="form-option" onclick="selectOption(this, 'faturamento', 'R$ 50k a R$ 200k')">
+              <input type="radio" name="faturamento" value="R$ 50k a R$ 200k">
+              <div class="form-option-indicator"></div>
+              <span class="form-option-text">R$ 50.000 a R$ 200.000</span>
+            </label>
+            <label class="form-option" onclick="selectOption(this, 'faturamento', 'Acima de R$ 200k')">
+              <input type="radio" name="faturamento" value="Acima de R$ 200k">
+              <div class="form-option-indicator"></div>
+              <span class="form-option-text">Acima de R$ 200.000</span>
+            </label>
+          </div>
+          <div class="form-nav">
+            <button class="btn-form-back" onclick="prevStep(3)">← Voltar</button>
+            <button class="btn-form-next" onclick="nextStep(5)" id="next4" disabled>Próximo →</button>
+          </div>
+        </div>
+
+        <!-- STEP 5 -->
+        <div class="form-step" id="step5">
+          <div class="form-step-label">
+            Pergunta 5 de 5
+            <div class="form-step-progress">
+              <div class="form-step-dot active"></div>
+              <div class="form-step-dot active"></div>
+              <div class="form-step-dot active"></div>
+              <div class="form-step-dot active"></div>
+              <div class="form-step-dot active"></div>
+            </div>
+          </div>
+          <div class="form-question">Seus dados para contato</div>
+          <div class="form-hint">Última etapa. Preencha seus dados para eu entrar em contato.</div>
+          <div style="display:flex;flex-direction:column;gap:var(--space-3);">
+            <input class="form-input" type="text" id="nome" placeholder="Seu nome" oninput="checkStep5()">
+            <input class="form-input" type="email" id="email" placeholder="Seu melhor e-mail" oninput="checkStep5()">
+            <input class="form-input" type="tel" id="whatsapp" placeholder="WhatsApp (com DDD)" oninput="checkStep5()">
+
+            <!-- Urgência -->
+            <div style="margin-top:var(--space-3);">
+              <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-text-disabled);margin-bottom:var(--space-3);">Em quanto tempo você precisa resolver isso?</div>
+              <div class="form-options">
+                <label class="form-option" onclick="selectOption(this, 'urgencia', 'Urgente')">
+                  <input type="radio" name="urgencia" value="Urgente">
+                  <div class="form-option-indicator"></div>
+                  <span class="form-option-text">É urgente — preciso resolver agora</span>
+                </label>
+                <label class="form-option" onclick="selectOption(this, 'urgencia', '30-60 dias')">
+                  <input type="radio" name="urgencia" value="30-60 dias">
+                  <div class="form-option-indicator"></div>
+                  <span class="form-option-text">Nos próximos 30 a 60 dias</span>
+                </label>
+                <label class="form-option" onclick="selectOption(this, 'urgencia', 'Pesquisando')">
+                  <input type="radio" name="urgencia" value="Pesquisando">
+                  <div class="form-option-indicator"></div>
+                  <span class="form-option-text">Ainda estou pesquisando opções</span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-nav">
+            <button class="btn-form-back" onclick="prevStep(4)">← Voltar</button>
+            <div style="display:flex;align-items:center;gap:var(--space-4);">
+              <div class="form-loading" id="formLoading">
+                <div class="loader-dot"></div>
+                <div class="loader-dot"></div>
+                <div class="loader-dot"></div>
+              </div>
+              <button class="btn-form-next" onclick="submitForm()" id="next5" disabled>Enviar →</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RESULTADO: QUALIFICADO -->
+      <div class="result-state form-card" id="resultQualified">
+        <svg class="result-icon" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="20" stroke="#C9A84C" stroke-width="1.5"/>
+          <path d="M16 24 L21 29 L32 18" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="result-title">Faz sentido conversar.</div>
+        <p class="result-desc">Pelo que você me contou, acredito que posso ajudar. Vou entrar em contato em até 24 horas no seu WhatsApp para agendarmos uma conversa de 30 minutos.</p>
+        <p style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-text-disabled);">Sem compromisso. Sem pitch de venda.</p>
+      </div>
+
+      <!-- RESULTADO: WHATSAPP -->
+      <div class="result-state form-card" id="resultWhatsapp">
+        <svg class="result-icon" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="20" stroke="rgba(201,168,76,0.4)" stroke-width="1.5"/>
+          <path d="M24 16 L24 24 L30 28" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="result-title">Recebi suas respostas.</div>
+        <p class="result-desc">Pelo momento do seu negócio, o melhor próximo passo é uma conversa rápida pelo WhatsApp. Clique abaixo para falar diretamente comigo.</p>
+        <a href="https://wa.me/55SEUNUMERODEWHATSAPP?text=Oi,%20preenchi%20o%20formulário%20no%20site%20da%20Urgencya" target="_blank" class="btn-primary" style="display:inline-flex;margin:0 auto;">
+          Falar no WhatsApp →
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FAQ
+  ============================================================ -->
+  <section id="faq">
+    <div class="container-narrow">
+      <div class="section-eyebrow fade-up" style="justify-content:center;">Perguntas frequentes</div>
+      <h2 class="section-title fade-up" style="text-align:center;margin-bottom:var(--space-12);">O que você provavelmente quer saber</h2>
+
+      <div class="faq-list fade-up">
+        <div class="faq-item">
+          <button class="faq-trigger" onclick="toggleFaq(this)">
+            <span class="faq-question">Quanto custa?</span>
+            <div class="faq-icon"></div>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Depende do que precisa ser resolvido. Uma landing page começa em R$ 2.500. Um sistema completo depende do escopo — mas o nosso processo começa exatamente por aí: mapear o problema antes de colocar preço. Na conversa, você vai saber exatamente o que faz sentido para o seu caso.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" onclick="toggleFaq(this)">
+            <span class="faq-question">Quanto tempo leva?</span>
+            <div class="faq-icon"></div>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Landing page: até 14 dias úteis. Sistema: entre 30 e 90 dias dependendo da complexidade. Diferente da maioria das agências, a gente entrega — não fica prometendo prazo que não cumpre.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" onclick="toggleFaq(this)">
+            <span class="faq-question">E se eu precisar mudar algo depois?</span>
+            <div class="faq-icon"></div>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Para isso existe o retainer mensal. O produto que entregamos não fica parado no tempo. Você pode querer novas funcionalidades, ajustes, integrações. O retainer garante que o sistema evolui junto com o negócio — sem projeto novo, sem orçamento novo.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" onclick="toggleFaq(this)">
+            <span class="faq-question">Já tentei contratar desenvolvimento antes e foi horrível.</span>
+            <div class="faq-icon"></div>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Eu sei. A maioria das experiências ruins com desenvolvimento vem de uma coisa: falta de clareza sobre o que será entregue antes de começar. Nosso processo começa pelo mapeamento do problema — você aprova o escopo antes de qualquer linha de código ser escrita.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-trigger" onclick="toggleFaq(this)">
+            <span class="faq-question">Não sei se preciso de sistema ou de landing page.</span>
+            <div class="faq-icon"></div>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">É exatamente isso que a conversa de 30 minutos vai descobrir. Sem compromisso, sem pitch. Se você não precisar de nenhum dos dois agora, eu vou te dizer isso na cara dura.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FECHAMENTO FINAL
+  ============================================================ -->
+  <section style="background:var(--color-surface-1);border-top:1px solid var(--color-border);">
+    <div class="container-narrow" style="text-align:center;">
+      <div class="section-eyebrow fade-up" style="justify-content:center;">Antes de fechar essa aba</div>
+      <h2 class="section-title fade-up" style="margin-bottom:var(--space-6);">Você chegou até aqui porque reconheceu algo.</h2>
+      <p class="fade-up" style="font-size:16px;font-weight:300;color:var(--color-text-secondary);line-height:1.75;max-width:520px;margin:0 auto var(--space-10);">
+        Seja a plataforma que você paga todo mês e que ainda não faz o que precisa. A planilha que vai quebrar um dia. Ou só a sensação de que o seu negócio poderia operar de um jeito muito mais inteligente.
+        <br><br>
+        A conversa de 30 minutos custa zero. E você sai dela sabendo exatamente o que precisa — mesmo que a resposta seja que a Urgencya não é o caminho certo pra você agora.
+        <br><br>
+        <strong style="color:var(--color-text-primary);">Isso a gente vai descobrir juntos.</strong>
+      </p>
+      <button class="btn-primary fade-up" onclick="scrollToForm()" style="margin:0 auto;">
+        Quero descobrir o que está me travando →
+      </button>
+      <p class="fade-up" style="margin-top:var(--space-4);font-family:var(--font-mono);font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--color-text-disabled);">Conversa de 30 minutos · Sem compromisso · Sem pitch de venda</p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <svg width="20" height="20" viewBox="0 0 80 80" fill="none">
+            <line x1="16" y1="16" x2="16" y2="52" stroke="#C9A84C" stroke-width="4" stroke-linecap="round"/>
+            <path d="M16 52 Q16 68 32 68 Q48 68 48 52" fill="none" stroke="#C9A84C" stroke-width="4" stroke-linecap="round"/>
+            <line x1="48" y1="52" x2="48" y2="24" stroke="#C9A84C" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="48" cy="24" r="4" fill="#C9A84C"/>
+          </svg>
+          <span style="font-family:var(--font-display);font-size:14px;font-weight:700;letter-spacing:-0.02em;color:var(--color-text-primary);">Urgencya System</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:var(--space-6);">
+          <a href="mailto:contato@urgencya.com.br" class="footer-link">contato@urgencya.com.br</a>
+          <span class="footer-text">© 2025 Urgencya System. urgencya.com.br</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       JAVASCRIPT
+  ============================================================ -->
+  <script>
+    // ============================================================
+    // CONFIGURAÇÃO — SUBSTITUA ANTES DE PUBLICAR
+    // ============================================================
+    const CONFIG = {
+      // Supabase
+      SUPABASE_URL: 'https://SEU_PROJECT_ID.supabase.co',
+      SUPABASE_ANON_KEY: 'SUA_SUPABASE_ANON_KEY',
+
+      // WhatsApp (substitua pelo número real com DDI+DDD)
+      WHATSAPP_NUMBER: '5511999999999',
+
+      // Regras de qualificação
+      FATURAMENTO_QUALIFICADO: ['R$ 10k a R$ 50k', 'R$ 50k a R$ 200k', 'Acima de R$ 200k'],
+      URGENCIA_QUALIFICADA: ['Urgente', '30-60 dias'],
+    };
+
+    // ============================================================
+    // ESTADO DO FORMULÁRIO
+    // ============================================================
+    const formData = {
+      segmento: '', dor: '', ferramenta: '',
+      faturamento: '', urgencia: '',
+      nome: '', email: '', whatsapp: ''
+    };
+
+    // ============================================================
+    // NAVEGAÇÃO MOBILE
+    // ============================================================
+    document.getElementById('mobileBtn').addEventListener('click', () => {
+      const links = document.getElementById('navLinks');
+      links.classList.toggle('open');
+    });
+
+    // ============================================================
+    // SCROLL HELPERS
+    // ============================================================
+    function scrollToForm() {
+      document.getElementById('contato').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // ============================================================
+    // FORMULÁRIO — STEPS
+    // ============================================================
+    function nextStep(stepNum) {
+      document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+      document.getElementById('step' + stepNum).classList.add('active');
+    }
+
+    function prevStep(stepNum) {
+      document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+      document.getElementById('step' + stepNum).classList.add('active');
+    }
+
+    function selectOption(el, field, value) {
+      // Remove selected de todos no grupo
+      el.closest('.form-options').querySelectorAll('.form-option').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      formData[field] = value;
+
+      // Habilita próximo botão
+      const stepMap = { segmento: 'next1', ferramenta: 'next3', faturamento: 'next4' };
+      if (stepMap[field]) {
+        document.getElementById(stepMap[field]).disabled = false;
+      }
+
+      // urgência — verifica step5
+      if (field === 'urgencia') checkStep5();
+    }
+
+    function enableNext(btnId, condition) {
+      document.getElementById(btnId).disabled = !condition;
+      if (btnId === 'next2') formData.dor = document.getElementById('dor').value;
+    }
+
+    function checkStep5() {
+      formData.nome = document.getElementById('nome').value;
+      formData.email = document.getElementById('email').value;
+      formData.whatsapp = document.getElementById('whatsapp').value;
+
+      const valid = formData.nome.length > 2
+        && formData.email.includes('@')
+        && formData.whatsapp.length > 8
+        && formData.urgencia !== '';
+
+      document.getElementById('next5').disabled = !valid;
+    }
+
+    // ============================================================
+    // QUALIFICAÇÃO — LÓGICA
+    // ============================================================
+    function isQualified() {
+      return CONFIG.FATURAMENTO_QUALIFICADO.includes(formData.faturamento)
+        && CONFIG.URGENCIA_QUALIFICADA.includes(formData.urgencia)
+        && formData.dor.length > 20;
+    }
+
+    // ============================================================
+    // SUBMIT — SUPABASE + EMAIL
+    // ============================================================
+    async function submitForm() {
+      formData.dor = document.getElementById('dor').value;
+
+      // UI — loading
+      document.getElementById('next5').style.display = 'none';
+      document.getElementById('formLoading').classList.add('active');
+
+      const payload = {
+        ...formData,
+        qualificado: isQualified(),
+        criado_em: new Date().toISOString(),
+        origem: 'landing_page_v1'
+      };
+
+      try {
+        // Envia para Supabase
+        const res = await fetch(`${CONFIG.SUPABASE_URL}/rest/v1/leads`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': CONFIG.SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${CONFIG.SUPABASE_ANON_KEY}`,
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!res.ok) throw new Error('Supabase error ' + res.status);
+
+      } catch (err) {
+        // Falha silenciosa — não bloqueia a experiência do usuário
+        // O dado pode ser recuperado depois via logs
+        console.error('Supabase submit error:', err);
+      }
+
+      // Loading off
+      document.getElementById('formLoading').classList.remove('active');
+
+      // Redireciona conforme qualificação
+      document.getElementById('formCard').style.display = 'none';
+
+      if (isQualified()) {
+        document.getElementById('resultQualified').classList.add('active');
+      } else {
+        // Atualiza link do WhatsApp com dados do lead
+        const waLink = document.querySelector('#resultWhatsapp a');
+        const msg = encodeURIComponent(
+          `Oi, preenchi o formulário no site da Urgencya. Me chamo ${formData.nome} e tenho um negócio de ${formData.segmento}.`
+        );
+        waLink.href = `https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${msg}`;
+        document.getElementById('resultWhatsapp').classList.add('active');
+      }
+    }
+
+    // ============================================================
+    // FAQ — ACCORDION
+    // ============================================================
+    function toggleFaq(trigger) {
+      const item = trigger.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
+
+    // ============================================================
+    // ANIMAÇÕES DE ENTRADA — INTERSECTION OBSERVER
+    // ============================================================
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
